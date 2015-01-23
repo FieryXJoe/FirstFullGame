@@ -79,7 +79,7 @@ public class Main
         shaderProgram.attachFragmentShader("FragmentShader.fs");
         shaderProgram.link();
         
-        LevelLoader.loadLevel("Level1.txt", this);
+        LevelLoader.loadLevel(this);
         /** Old level gen code
         float x = 0.0625f, y = (0.0625f * 4)/3;
         p = new Player(-.8f, -1f + 8*y, glGenVertexArrays(), glGenBuffers(), glGenBuffers(), glGenBuffers());
@@ -164,7 +164,7 @@ public class Main
 			now = (float) glfwGetTime();
 			delta = now - last;
 			last = now;
-			timeOfLastFrame = now;
+			timeOfLastFrame = delta;
 			update(delta);
 			render(delta);
 
@@ -193,18 +193,18 @@ public class Main
 	public void glfwKeyCallback(long window, int key, int scancode, int action, int mods)
 	{
 		if(key == GLFW_KEY_D)
-			if(action != GLFW_RELEASE)
+			if(action == GLFW_PRESS || action == GLFW_REPEAT)
 				p.setWalkingRight(true);
 			else
 				p.setWalkingRight(false);
 		if(key == GLFW_KEY_A)
-			if(action != GLFW_RELEASE)
+			if(action == GLFW_PRESS || action == GLFW_REPEAT)
 				p.setWalkingLeft(true);
 			else
 				p.setWalkingLeft(false);
 		if(key == GLFW_KEY_SPACE)
 			if(action != GLFW_RELEASE && p.isOnGround)
-				p.setYVelocity(0.000495);
+				p.setYVelocity(0.495);
 		if(key == GLFW_KEY_R)
 			if(action != GLFW_RELEASE)
 			{
@@ -340,6 +340,10 @@ public class Main
         int indicesCount = indices.length;
 		bindVertices(vertices, colors, indices, vaoID, vboID, vbocID, vboiID);
 		drawVertices(GL_TRIANGLES, vaoID, vboiID, indicesCount);
+	}
+	public void loadNextLevel()
+	{
+		LevelLoader.loadLevel(this);
 	}
 	public static void main(String[] args)
 	{
