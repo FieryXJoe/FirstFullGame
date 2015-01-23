@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.lwjgl.glfw.GLFW;
+import static org.lwjgl.glfw.GLFW.*;
+
 import org.lwjgl.system.linux.XVisualInfo;
+
 
 public class Player extends CollidableObject
 {
@@ -55,14 +57,14 @@ public class Player extends CollidableObject
 	{
 		collidedObjects = new ArrayList<CollidableObject>();
 		if(walkLeft)
-			setXVelocity(-0.00027);
+			setXVelocity(-0.27);
 		else if(walkRight)
-			setXVelocity(0.00027);
+			setXVelocity(0.27);
 		else
 			if(getXVelocity() > 0)
-				setXVelocity(getXVelocity() - 0.000027);
+				setXVelocity(getXVelocity() - 0.027);
 			else if(getXVelocity() < 0)
-				setXVelocity(getXVelocity() + 0.000027);
+				setXVelocity(getXVelocity() + 0.027);
 		double deltaX = velocityX*getDeltaT();
 		double deltaY = velocityY*getDeltaT();
 		float[] oldVertices = vertices;
@@ -74,7 +76,7 @@ public class Player extends CollidableObject
 			if(checkForCollision(c))
 			{
 				if(c instanceof LevelExit)
-					System.exit(0);
+					m.loadNextLevel();
 				collidedObjects.add(c);
 				double tempDeltaX = 0, tempDeltaY = 0;
 				collidedObject = c;
@@ -144,9 +146,9 @@ public class Player extends CollidableObject
 						-Math.max(tempVertices[0], tempVertices[4]))<0.001f)
 					isOnWallLeft = true;
 			}
-		setYVelocity(getYVelocity()-(0.0000009f * getDeltaT()));
+		setYVelocity(getYVelocity()-(.9f * getDeltaT()));
+		System.out.println(getYVelocity() + " , " + getDeltaT());
 		setVertices(vertices);
-		System.out.println(getYVelocity());
 		if(Math.random() > 0.9)
 		{
 			setColor((float)Math.random() * 1f, (float)Math.random() * 1f, (float)Math.random() * 1f, 1f);
