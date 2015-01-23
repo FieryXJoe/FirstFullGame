@@ -10,12 +10,23 @@ public class LevelLoader
 {
 	private static String rawText;
 	private static ArrayList<CollidableObject> objList = new ArrayList<CollidableObject>();
+	private static int level = -1;
+	private static String[] levelFiles = {
+		"Level1.txt" , "Level2.txt"
+	};
 	public LevelLoader(Main main)
 	{
 		
 	}
-	public static void loadLevel(String filePath, Main m)
+	public static void loadLevel(Main m)
 	{
+		String filePath = "";
+		try{
+			filePath = levelFiles[++level];
+		}catch(IndexOutOfBoundsException e){
+			System.out.println("Victory screen placeholder");
+			System.exit(0);
+		}
 		objList = new ArrayList<CollidableObject>();
         StringBuilder source = new StringBuilder();
         try
