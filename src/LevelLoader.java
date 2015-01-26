@@ -54,7 +54,6 @@ public class LevelLoader
 			for(int j = 0; j < objects.length; j++)
 			{
 				String object = objects[j];
-				System.out.println(object);
 				if(object.charAt(0) == 'p')
 				{
 					if(object.contains("[") && object.contains("]"))
