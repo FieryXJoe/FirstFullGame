@@ -90,10 +90,10 @@ public class Player extends CollidableObject
 				double tempDeltaX = 0, tempDeltaY = 0;
 				collidedObject = c;
 				float[] tempVerticies = collidedObject.getVertices();
-				if(getXVelocity() > 0)
+				if(getXVelocity() > 0 && !(c instanceof  MovingPlatform))
 					if(Math.max(vertices[0], vertices[4])>Math.min(tempVerticies[0], tempVerticies[4]))
 						tempDeltaX = (Math.min(tempVerticies[0], tempVerticies[4])-Math.max(vertices[0], vertices[4]));
-				if(getXVelocity() < 0)
+				if(getXVelocity() < 0 && !(c instanceof  MovingPlatform))
 					if(Math.min(vertices[0], vertices[4]) < Math.max(tempVerticies[0], tempVerticies[4]))
 						tempDeltaX = (Math.max(tempVerticies[0], tempVerticies[4])-Math.min(vertices[0], vertices[4]));
 				if(getYVelocity() > 0)
