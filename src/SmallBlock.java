@@ -41,6 +41,7 @@ public class SmallBlock extends CollidableObject
 			getCoords()[0] + 0.0625f , getCoords()[1] + (0.0625f * 4)/3,
 			getCoords()[0] + 0.0625f, getCoords()[1]
 	});
+		vertices = getVertices();
 	}
 	@Override
 	public void act(Main m) 

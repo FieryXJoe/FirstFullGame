@@ -154,6 +154,15 @@ public abstract class CollidableObject
 				}
 				else
 					return new LevelExit(x, y, glGenVertexArrays(), glGenBuffers(), glGenBuffers(), glGenBuffers());
+			case 3:
+				if(s.contains("[") && s.contains("]"))
+				{
+					float xOffset = Float.parseFloat((s.substring(s.indexOf("[") + 1, s.indexOf(";", s.indexOf("[")))));
+					float yOffset = Float.parseFloat(s.substring(s.indexOf(";", s.indexOf("[")) + 1,s.indexOf("]")));
+					return new MovingPlatform(x + xOffset, y + yOffset, glGenVertexArrays(), glGenBuffers(), glGenBuffers(), glGenBuffers());
+				}
+				else
+					return new MovingPlatform(x, y, glGenVertexArrays(), glGenBuffers(), glGenBuffers(), glGenBuffers());
 		}
 		return null;
 	}

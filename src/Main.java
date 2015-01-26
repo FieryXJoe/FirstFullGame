@@ -80,28 +80,6 @@ public class Main
         shaderProgram.link();
         
         LevelLoader.loadLevel(this);
-        /** Old level gen code
-        float x = 0.0625f, y = (0.0625f * 4)/3;
-        p = new Player(-.8f, -1f + 8*y, glGenVertexArrays(), glGenBuffers(), glGenBuffers(), glGenBuffers());
-        for(int i = 0; i < 32; i++)
-        	objectList.add(new SmallBlock(-1f + (i * x),-1f, glGenVertexArrays(), glGenBuffers(), glGenBuffers(), glGenBuffers()));
-        for(int i = 0; i < 24; i++)
-        	objectList.add(new SmallBlock(-0.5f + (i * x), -1f + y, glGenVertexArrays(), glGenBuffers(), glGenBuffers(), glGenBuffers()));
-        int j = objectList.size() - 10;
-        for(int i = 3; i > 0; i--)
-        	objectList.remove(j);
-        for(int i = 0; i < 23; i++)
-        	objectList.add(new SmallBlock(-0.5f + ((i + 1) * x), -1f + (2*y), glGenVertexArrays(), glGenBuffers(), glGenBuffers(), glGenBuffers()));
-        j = objectList.size() - 10;
-        for(int i = 3; i > 0; i--)
-        	objectList.remove(j);
-        for(int i = 0; i < 22; i++)
-        	objectList.add(new SmallBlock(-0.5f + ((i + 2) * x), -1f + (3*y), glGenVertexArrays(), glGenBuffers(), glGenBuffers(), glGenBuffers()));
-        j = objectList.size() - 10;
-        for(int i = 3; i > 0; i--)
-        	objectList.remove(j);
-        objectList.add(new LevelExit(0.8f, -1f + (4*y), glGenVertexArrays(), glGenBuffers(), glGenBuffers(), glGenBuffers()));
-        */
 	}
 	public void update(float delta)
 	{
@@ -253,6 +231,10 @@ public class Main
 	public void setPlayer(Player p)
 	{
 		this.p = p;
+	}
+	public Player getPlayer()
+	{
+		return p;
 	}
 	public void addToObjList(CollidableObject c)
 	{
