@@ -30,6 +30,12 @@ public class Player extends CollidableObject
 		setVertices(vertices);
 		setColor(colors);
 	}
+	public Player(float x, float y, int vaoID, int vboID, int vbocID, int vboiID, float[] color, float[] vertices)
+	{
+		super(x, y, vaoID, vboID, vbocID, vboiID);
+		setVertices(vertices);
+		setColor(colors);
+	}
 	@Override
 	public void doRender(Main m)
 	{
@@ -51,6 +57,7 @@ public class Player extends CollidableObject
 				getCoords()[0]+0.05f, getCoords()[1]+0.1f,
 				getCoords()[0]+0.05f, getCoords()[1]
 	});
+		vertices = getVertices();
 	}
 	@Override
 	public void act(Main m)
@@ -60,7 +67,7 @@ public class Player extends CollidableObject
 			setXVelocity(-0.27);
 		else if(walkRight)
 			setXVelocity(0.27);
-		else
+		else if(getXVelocity() != 0)
 			if(getXVelocity() > 0)
 				setXVelocity(getXVelocity() - 0.027);
 			else if(getXVelocity() < 0)
@@ -77,12 +84,12 @@ public class Player extends CollidableObject
 			{
 				if(c instanceof LevelExit)
 					m.loadNextLevel();
+				if(c instanceof MovingPlatform)
+					setXVelocity(((MovingPlatform)c).getXVelocity());
 				collidedObjects.add(c);
 				double tempDeltaX = 0, tempDeltaY = 0;
 				collidedObject = c;
 				float[] tempVerticies = collidedObject.getVertices();
-				// TODO: Create method given velocity, distance to collision,
-				// possibly both objects and sets new velocity and position
 				if(getXVelocity() > 0)
 					if(Math.max(vertices[0], vertices[4])>Math.min(tempVerticies[0], tempVerticies[4]))
 						tempDeltaX = (Math.min(tempVerticies[0], tempVerticies[4])-Math.max(vertices[0], vertices[4]));
@@ -136,7 +143,6 @@ public class Player extends CollidableObject
 				else if(Math.abs(Math.max(vertices[1], vertices[5])
 						-Math.min(tempVertices[1], tempVertices[5]))<0.001f)
 					isOnCelieng = true;
-				// TODO: MAKE DIS SHIT WORK
 				else if(Math.abs(Math.max(vertices[0], vertices[4])
 						-Math.min(tempVertices[0], tempVertices[4]))<0.001f)
 				{
@@ -147,7 +153,6 @@ public class Player extends CollidableObject
 					isOnWallLeft = true;
 			}
 		setYVelocity(getYVelocity()-(.9f * getDeltaT()));
-		System.out.println(getYVelocity() + " , " + getDeltaT());
 		setVertices(vertices);
 		if(Math.random() > 0.9)
 		{
