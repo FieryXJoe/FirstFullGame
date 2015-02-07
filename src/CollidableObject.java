@@ -123,7 +123,7 @@ public abstract class CollidableObject
 		float minX = Math.min(vertices[0], vertices[4]);
 		float maxY = Math.max(vertices[1], vertices[5]);
 		float minY = Math.min(vertices[1], vertices[5]);
-		if(minX == maxXTemp || maxY == minYTemp || maxX == minXTemp || minY == maxYTemp)
+		if(Math.abs(minX - maxXTemp) < 0.001 || Math.abs(maxY - minYTemp) < 0.001|| Math.abs(maxX - minXTemp) < 0.001 || Math.abs(minY - maxYTemp) < 0.001)
 			return true;
 		return false;
 	}
