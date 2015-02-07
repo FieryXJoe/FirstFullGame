@@ -63,18 +63,11 @@ public class Player extends CollidableObject
 	public void act(Main m)
 	{
 		collidedObjects = new ArrayList<CollidableObject>();
-		if(walkLeft)
-			setXVelocity(-0.27);
-		else if(walkRight)
-			setXVelocity(0.27);
-		else if(getXVelocity() != 0)
-			if(getXVelocity() > 0)
-				setXVelocity(getXVelocity() - 0.027);
-			else if(getXVelocity() < 0)
-				setXVelocity(getXVelocity() + 0.027);
-		double deltaX = velocityX*getDeltaT();
-		double deltaY = velocityY*getDeltaT();
-		float[] oldVertices = vertices;
+		double deltaX = getXVelocity()*getDeltaT();
+		double deltaY = getYVelocity()*getDeltaT();
+		float[] oldVertices = new float[vertices.length];
+		for(int i = 0; i < vertices.length; i++)
+			oldVertices[i] = vertices[i];
 		vertices[0] += (float)deltaX;
 		vertices[1] += (float)deltaY;
 		reAlignVertices();
@@ -82,12 +75,13 @@ public class Player extends CollidableObject
 		for(CollidableObject c : m.getObjList())
 			if(checkForCollision(c))
 			{
-				if(c instanceof LevelExit)
-					m.loadNextLevel();
-				if(c instanceof MovingPlatform)
-					setXVelocity(((MovingPlatform)c).getXVelocity());
-				collidedObjects.add(c);
 				double tempDeltaX = 0, tempDeltaY = 0;
+				if(c instanceof LevelExit)
+				{
+					m.loadNextLevel();
+					break;
+				}
+				collidedObjects.add(c);
 				collidedObject = c;
 				float[] tempVerticies = collidedObject.getVertices();
 				if(getXVelocity() > 0 && !(c instanceof  MovingPlatform))
@@ -101,7 +95,14 @@ public class Player extends CollidableObject
 						tempDeltaY = (Math.min(tempVerticies[1], tempVerticies[5])-Math.max(vertices[1], vertices[5]));
 				if(getYVelocity() < 0)
 					if(Math.min(vertices[1], vertices[5])<Math.max(tempVerticies[1], tempVerticies[5]))
+					{
+						if(c instanceof MovingPlatform)
+						{
+							setXVelocity(((MovingPlatform)c).getXVelocity());
+							tempDeltaX = getXVelocity()*getDeltaT();
+						}
 						tempDeltaY = (Math.max(tempVerticies[1], tempVerticies[5])-Math.min(vertices[1], vertices[5]));
+					}
 				if(tempDeltaX != 0 && tempDeltaY != 0)
 					if(Math.abs(tempDeltaX) < Math.abs(tempDeltaY))
 					{
@@ -120,44 +121,54 @@ public class Player extends CollidableObject
 				}
 				else if(tempDeltaY != 0)
 				{
-					setYVelocity(0);
+					setYVelocity(0); 
 					deltaY = tempDeltaY;
-				}
-				c.setColor(1f, 0f, 0f, 1f);
-				vertices = oldVertices;
+				}	
+				for(int i = 0; i < vertices.length; i++)
+					vertices[i] = oldVertices[i];
 				vertices[0] += (float)deltaX;
 				vertices[1] += (float)deltaY;
 				reAlignVertices();
+				c.setColor(1f, 0f, 0f, 1f);
 			}
 		isOnGround = false;
 		isOnCelieng = false;
 		isOnWallRight = false;
 		isOnWallLeft = false;
+		setVertices(vertices);
 		for(CollidableObject c : m.getObjList())
 			if(checkForContact(c))
 			{
 				float[] tempVertices = c.getVertices();
 				if(Math.abs(Math.min(vertices[1], vertices[5])
-						-Math.max(tempVertices[1], tempVertices[5]))<0.001f)
+						-Math.max(tempVertices[1], tempVertices[5]))<0.001)
 					isOnGround = true;
 				else if(Math.abs(Math.max(vertices[1], vertices[5])
-						-Math.min(tempVertices[1], tempVertices[5]))<0.001f)
+						-Math.min(tempVertices[1], tempVertices[5]))<0.001)
 					isOnCelieng = true;
 				else if(Math.abs(Math.max(vertices[0], vertices[4])
-						-Math.min(tempVertices[0], tempVertices[4]))<0.001f)
-				{
+						-Math.min(tempVertices[0], tempVertices[4]))<0.001)
 					isOnWallRight = true;
-				}
 				else if(Math.abs(Math.min(vertices[0], vertices[4])
-						-Math.max(tempVertices[0], tempVertices[4]))<0.001f)
+						-Math.max(tempVertices[0], tempVertices[4]))<0.001)
 					isOnWallLeft = true;
 			}
 		setYVelocity(getYVelocity()-(.9f * getDeltaT()));
-		setVertices(vertices);
 		if(Math.random() > 0.9)
 		{
 			setColor((float)Math.random() * 1f, (float)Math.random() * 1f, (float)Math.random() * 1f, 1f);
 		}
+		if(walkLeft)
+			setXVelocity(-0.27);
+		else if(walkRight)
+			setXVelocity(0.27);
+		else if(getXVelocity() != 0 && isOnGround)
+			if(Math.abs(getXVelocity()) < 0.00001)
+				setXVelocity(0);
+			else if(getXVelocity() > 0)
+				setXVelocity(getXVelocity() - 0.027);
+			else if(getXVelocity() < 0)
+				setXVelocity(getXVelocity() + 0.027);
 	}
 	/**
 	 * Ensures character retains shape based off of bottom left coordinate
@@ -173,7 +184,7 @@ public class Player extends CollidableObject
 	}
 	public double getSpeed()
 	{
-		return Math.sqrt(velocityX*velocityX+velocityY*velocityY);
+		return Math.sqrt(getXVelocity()*getXVelocity()+getYVelocity()*getYVelocity());
 	}
 	public double getDeltaT()
 	{
