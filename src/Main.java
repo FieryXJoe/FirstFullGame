@@ -138,16 +138,19 @@ public class Main
 		running = true;
 
 		while (running && glfwWindowShouldClose(windowID) != GL_TRUE)
-		{
+		{	
 			now = (float) glfwGetTime();
 			delta = now - last;
-			last = now;
-			timeOfLastFrame = delta;
-			update(delta);
-			render(delta);
+			if(!(delta < 1/60))
+			{
+				last = now;
+				timeOfLastFrame = delta;
+				update(delta);
+				render(delta);
 
-			glfwPollEvents();
-			glfwSwapBuffers(windowID);
+				glfwPollEvents();
+				glfwSwapBuffers(windowID);
+			}
 		}
 		dispose();
 
@@ -182,7 +185,7 @@ public class Main
 				p.setWalkingLeft(false);
 		if(key == GLFW_KEY_SPACE)
 			if(action != GLFW_RELEASE && p.isOnGround)
-				p.setYVelocity(0.495);
+				p.setYVelocity(0.6);
 		if(key == GLFW_KEY_R)
 			if(action != GLFW_RELEASE)
 			{
