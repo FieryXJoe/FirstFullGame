@@ -46,7 +46,9 @@ public class MovingPlatform extends Player
 	{
 		collidedObjects = new ArrayList<CollidableObject>();
 		double deltaX = getXVelocity()*getDeltaT();
-		float[] oldVertices = vertices;
+		float[] oldVertices = new float[vertices.length];
+		for(int i = 0; i < vertices.length; i++)
+			oldVertices[i] = vertices[i];
 		vertices[0] += (float)deltaX;
 		reAlignVertices();
 		CollidableObject collidedObject = null;
@@ -73,10 +75,13 @@ public class MovingPlatform extends Player
 						setXVelocity(getXVelocity() * -1.0f);
 					}
 				if(tempDeltaX != 0)
+				{
 					deltaX = tempDeltaX;
-				vertices = oldVertices;
-				vertices[0] += (float)deltaX;
-				reAlignVertices();
+					for(int i = 0; i < vertices.length; i++)
+						vertices[i] = oldVertices[i];
+					vertices[0] += (float)deltaX;
+					reAlignVertices();
+				}
 			}
 		}
 		setVertices(vertices);
