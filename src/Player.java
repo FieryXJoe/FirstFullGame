@@ -162,8 +162,8 @@ public class Player extends CollidableObject
 			setXVelocity(-0.27);
 		else if(walkRight)
 			setXVelocity(0.27);
-		else if(getXVelocity() != 0 && isOnGround)
-			if(Math.abs(getXVelocity()) < 0.00001)
+		else if(getXVelocity() != 0)
+			if(Math.abs(getXVelocity()) < 0.0001)
 				setXVelocity(0);
 			else if(getXVelocity() > 0)
 				setXVelocity(getXVelocity() - 0.027);
