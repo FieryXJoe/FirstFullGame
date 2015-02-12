@@ -8,7 +8,7 @@ import org.lwjgl.system.linux.XVisualInfo;
 
 public class Player extends CollidableObject
 {
-	public boolean isOnGround, isOnCelieng, isOnWallLeft, isOnWallRight, walkRight, walkLeft;
+	public boolean isOnGround, isOnCelieng, isOnWallLeft, isOnWallRight, walkRight, walkLeft, isDead = false;
 	public ArrayList<CollidableObject> collidedObjects;
 	float[] vertices = {
 			getCoords()[0], getCoords()[1],
@@ -58,6 +58,7 @@ public class Player extends CollidableObject
 				getCoords()[0]+0.05f, getCoords()[1]
 	});
 		vertices = getVertices();
+		isDead = false;
 	}
 	@Override
 	public void act(Main m)
@@ -79,6 +80,11 @@ public class Player extends CollidableObject
 				if(c instanceof LevelExit)
 				{
 					m.loadNextLevel();
+					break;
+				}
+				if(c instanceof Spikes)
+				{
+					isDead = true;
 					break;
 				}
 				collidedObjects.add(c);
