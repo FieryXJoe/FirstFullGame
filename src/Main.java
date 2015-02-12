@@ -173,17 +173,17 @@ public class Main
 
 	public void glfwKeyCallback(long window, int key, int scancode, int action, int mods)
 	{
-		if(key == GLFW_KEY_D)
+		if(key == GLFW_KEY_D && !p.isDead)
 			if(action == GLFW_PRESS || action == GLFW_REPEAT)
 				p.setWalkingRight(true);
 			else
 				p.setWalkingRight(false);
-		if(key == GLFW_KEY_A)
+		if(key == GLFW_KEY_A && !p.isDead)
 			if(action == GLFW_PRESS || action == GLFW_REPEAT)
 				p.setWalkingLeft(true);
 			else
 				p.setWalkingLeft(false);
-		if(key == GLFW_KEY_SPACE)
+		if(key == GLFW_KEY_SPACE && !p.isDead)
 			if(action != GLFW_RELEASE && p.isOnGround)
 				p.setYVelocity(0.6);
 		if(key == GLFW_KEY_R)
@@ -323,6 +323,13 @@ public class Main
                 2, 3, 0
         };
         int indicesCount = indices.length;
+		bindVertices(vertices, colors, indices, vaoID, vboID, vbocID, vboiID);
+		drawVertices(GL_TRIANGLES, vaoID, vboiID, indicesCount);
+	}
+	public void renderTriangle(float[] vertices, float[] colors, int vaoID, int vboID, int vbocID, int vboiID)
+	{
+		byte[] indices = {0,1,2};
+		int indicesCount = indices.length;
 		bindVertices(vertices, colors, indices, vaoID, vboID, vbocID, vboiID);
 		drawVertices(GL_TRIANGLES, vaoID, vboiID, indicesCount);
 	}
