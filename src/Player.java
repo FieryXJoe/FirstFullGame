@@ -85,6 +85,8 @@ public class Player extends CollidableObject
 				if(c instanceof Spikes)
 				{
 					isDead = true;
+					walkLeft = false;
+					walkRight = false;
 					break;
 				}
 				collidedObjects.add(c);
@@ -159,7 +161,7 @@ public class Player extends CollidableObject
 						-Math.max(tempVertices[0], tempVertices[4]))<0.001)
 					isOnWallLeft = true;
 			}
-		setYVelocity(getYVelocity()-(.9f * getDeltaT()));
+		setYVelocity(getYVelocity()-(0.9f * getDeltaT()));
 		if(Math.random() > 0.9)
 		{
 			setColor((float)Math.random() * 1f, (float)Math.random() * 1f, (float)Math.random() * 1f, 1f);
