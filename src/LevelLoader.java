@@ -12,7 +12,8 @@ public class LevelLoader
 	private static ArrayList<CollidableObject> objList = new ArrayList<CollidableObject>();
 	private static int level = -1;
 	private static String[] levelFiles = {
-		"Level1.txt" , "Level2.txt" , "Level3.txt", "Level4.txt"
+		"Level1.txt" , "Level2.txt" , "Level3.txt", "Level4.txt",
+		"Level5.txt"
 	};
 	public LevelLoader(Main main)
 	{
