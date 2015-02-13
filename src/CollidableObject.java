@@ -172,6 +172,27 @@ public abstract class CollidableObject
 				}
 				else
 					return new Spikes(x, y, glGenVertexArrays(), glGenBuffers(), glGenBuffers(), glGenBuffers());
+			case 5:
+				float maxY, minY;
+				if(s.contains("(") && s.contains(")"))
+				{
+					String temp = s.substring(s.indexOf("(") + 1, s.indexOf(")"));
+					minY = y - Float.parseFloat(temp.split(";")[0]);
+					maxY = y + Float.parseFloat(temp.split(";")[1]);
+				}
+				else
+				{
+					maxY = y + .5f;
+					minY = y;
+				}
+				if(s.contains("[") && s.contains("]"))
+				{
+					float xOffset = Float.parseFloat((s.substring(s.indexOf("[") + 1, s.indexOf(";", s.indexOf("[")))));
+					float yOffset = Float.parseFloat(s.substring(s.indexOf(";", s.indexOf("[")) + 1,s.indexOf("]")));
+					return new VerticalMovingPlatform(x + xOffset, y + yOffset, glGenVertexArrays(), glGenBuffers(), glGenBuffers(), glGenBuffers(), maxY, minY);
+				}
+				else
+					return new VerticalMovingPlatform(x, y, glGenVertexArrays(), glGenBuffers(), glGenBuffers(), glGenBuffers(), maxY, minY);
 		}
 		return null;
 	}
