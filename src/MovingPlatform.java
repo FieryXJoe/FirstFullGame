@@ -54,7 +54,7 @@ public class MovingPlatform extends Player
 		CollidableObject collidedObject = null;
 		for(CollidableObject c : m.getObjList())
 		{
-			if(!c.equals(this) && !c.equals(m.getPlayer()) && checkForCollision(c))
+			if(!c.equals(this) && checkForCollision(c))
 			{
 				collidedObjects.add(c);
 				double tempDeltaX = 0;
