@@ -15,10 +15,7 @@ public class LevelLoader
 		"Level1.txt" , "Level2.txt" , "Level3.txt", "Level4.txt",
 		"Level5.txt"
 	};
-	public LevelLoader(Main main)
-	{
-		
-	}
+	public LevelLoader(Main main){}
 	public static void loadLevel(Main m)
 	{
 		String filePath = "";
