@@ -29,6 +29,8 @@ public class VerticalMovingPlatform extends Player
 				x+0.125f, y+(0.0625f * 4)/3,
 				x+0.125f, y
 		});
+		this.maxY = maxY;
+		this.minY = minY;
 		setYVelocity(0.2);
 	}
 	@Override
@@ -43,7 +45,7 @@ public class VerticalMovingPlatform extends Player
 		m.renderRectangleAsTriangles(getVertices(), getColor(), getVAO(), getVBO(), getVBOC(), getVBOI());
 	}
 	@Override
-	public void act(Main m)
+	public void act(Main m)	
 	{
 		collidedObjects = new ArrayList<CollidableObject>();
 		double deltaY = getYVelocity()*getDeltaT();
