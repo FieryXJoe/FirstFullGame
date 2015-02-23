@@ -183,7 +183,7 @@ public class Main
 				p.setWalkingLeft(true);
 			else
 				p.setWalkingLeft(false);
-		if(key == GLFW_KEY_SPACE && !p.isDead)
+		if(key == GLFW_KEY_SPACE && !p.isDead && !(p.isOnWallLeft || p.isOnWallRight))
 			if(action != GLFW_RELEASE && p.isOnGround)
 				p.setYVelocity(0.6);
 		if(key == GLFW_KEY_R)
