@@ -83,14 +83,14 @@ public abstract class CollidableObject
 	{
 		float[] tempVertices = c.getVertices();
 		float[] vertices = getVertices();
-		float maxXTemp = Math.max(tempVertices[0], tempVertices[4]);
-		float minXTemp = Math.min(tempVertices[0], tempVertices[4]);
-		float maxYTemp = Math.max(tempVertices[1], tempVertices[5]);
-		float minYTemp = Math.min(tempVertices[1], tempVertices[5]);
-		float maxX = Math.max(vertices[0], vertices[4]);
-		float minX = Math.min(vertices[0], vertices[4]);
-		float maxY = Math.max(vertices[1], vertices[5]);
-		float minY = Math.min(vertices[1], vertices[5]);
+		float maxXTemp = tempVertices[4];
+		float minXTemp = tempVertices[0];
+		float maxYTemp = tempVertices[5];
+		float minYTemp = tempVertices[1];
+		float maxX = vertices[4];
+		float minX = vertices[0];
+		float maxY = vertices[5];
+		float minY = vertices[1];
 		if(maxXTemp > maxX)
 			if(minXTemp < maxX)
 				if(maxYTemp > maxY)
@@ -115,14 +115,14 @@ public abstract class CollidableObject
 	{
 		float[] tempVertices = c.getVertices();
 		float[] vertices = getVertices();
-		float maxXTemp = Math.max(tempVertices[0], tempVertices[4]);
-		float minXTemp = Math.min(tempVertices[0], tempVertices[4]);
-		float maxYTemp = Math.max(tempVertices[1], tempVertices[5]);
-		float minYTemp = Math.min(tempVertices[1], tempVertices[5]);
-		float maxX = Math.max(vertices[0], vertices[4]);
-		float minX = Math.min(vertices[0], vertices[4]);
-		float maxY = Math.max(vertices[1], vertices[5]);
-		float minY = Math.min(vertices[1], vertices[5]);
+		float maxXTemp = tempVertices[4];
+		float minXTemp = tempVertices[0];
+		float maxYTemp = tempVertices[5];
+		float minYTemp = tempVertices[1];
+		float maxX = vertices[4];
+		float minX = vertices[0];
+		float maxY = vertices[5];
+		float minY = vertices[1];
 		if(Math.abs(minX - maxXTemp) < 0.001 || Math.abs(maxY - minYTemp) < 0.001|| Math.abs(maxX - minXTemp) < 0.001 || Math.abs(minY - maxYTemp) < 0.001)
 			return true;
 		return false;

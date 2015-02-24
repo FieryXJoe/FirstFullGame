@@ -91,25 +91,25 @@ public class Player extends CollidableObject
 				}
 				collidedObjects.add(c);
 				collidedObject = c;
-				float[] tempVerticies = collidedObject.getVertices();
+				float[] tempVertices = collidedObject.getVertices();
 				if(getXVelocity() > 0 && !(c instanceof  MovingPlatform))
-					if(Math.max(vertices[0], vertices[4])>Math.min(tempVerticies[0], tempVerticies[4]))
-						tempDeltaX = (Math.min(tempVerticies[0], tempVerticies[4])-Math.max(vertices[0], vertices[4]));
+					if(vertices[4]>tempVertices[0])
+						tempDeltaX = (tempVertices[0]-vertices[4]);
 				if(getXVelocity() < 0 && !(c instanceof  MovingPlatform))
-					if(Math.min(vertices[0], vertices[4]) < Math.max(tempVerticies[0], tempVerticies[4]))
-						tempDeltaX = (Math.max(tempVerticies[0], tempVerticies[4])-Math.min(vertices[0], vertices[4]));
+					if(vertices[0] < tempVertices[4])
+						tempDeltaX = (tempVertices[4]-vertices[0]);
 				if(getYVelocity() > 0)
-					if(Math.max(vertices[1], vertices[5])>Math.min(tempVerticies[1], tempVerticies[5]))
-						tempDeltaY = (Math.min(tempVerticies[1], tempVerticies[5])-Math.max(vertices[1], vertices[5]));
+					if(vertices[5]>tempVertices[1])
+						tempDeltaY = (tempVertices[1]-vertices[5]);
 				if(getYVelocity() < 0)
-					if(Math.min(vertices[1], vertices[5])<Math.max(tempVerticies[1], tempVerticies[5]))
+					if(vertices[1]<tempVertices[5])
 					{
 						if(c instanceof MovingPlatform)
 						{
 							setXVelocity(((MovingPlatform)c).getXVelocity());
 							tempDeltaX = getXVelocity()*getDeltaT();
 						}
-						tempDeltaY = (Math.max(tempVerticies[1], tempVerticies[5])-Math.min(vertices[1], vertices[5]));
+						tempDeltaY = tempVertices[5] - vertices[1];
 					}
 				if(tempDeltaX != 0 && tempDeltaY != 0)
 					if(Math.abs(tempDeltaX) < Math.abs(tempDeltaY))
@@ -148,17 +148,13 @@ public class Player extends CollidableObject
 			if(checkForContact(c))
 			{
 				float[] tempVertices = c.getVertices();
-				if(Math.abs(Math.min(vertices[1], vertices[5])
-						-Math.max(tempVertices[1], tempVertices[5]))<0.001)
+				if(Math.abs(vertices[1] - tempVertices[5])<0.001)
 					isOnGround = true;
-				else if(Math.abs(Math.max(vertices[1], vertices[5])
-						-Math.min(tempVertices[1], tempVertices[5]))<0.001)
+				else if(Math.abs(vertices[5] - tempVertices[1])<0.001)
 					isOnCelieng = true;
-				else if(Math.abs(Math.max(vertices[0], vertices[4])
-						-Math.min(tempVertices[0], tempVertices[4]))<0.001)
+				else if(Math.abs(vertices[4] - tempVertices[0])<0.001)
 					isOnWallRight = true;
-				else if(Math.abs(Math.min(vertices[0], vertices[4])
-						-Math.max(tempVertices[0], tempVertices[4]))<0.001)
+				else if(Math.abs(vertices[0] - tempVertices[4])<0.001)
 					isOnWallLeft = true;
 			}
 		setYVelocity(getYVelocity()-(0.9f * getDeltaT()));
