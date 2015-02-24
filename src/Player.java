@@ -93,16 +93,16 @@ public class Player extends CollidableObject
 				collidedObject = c;
 				float[] tempVertices = collidedObject.getVertices();
 				if(getXVelocity() > 0 && !(c instanceof  MovingPlatform))
-					if(vertices[4]>tempVertices[0])
+					if(vertices[4] > tempVertices[0])
 						tempDeltaX = (tempVertices[0]-vertices[4]);
 				if(getXVelocity() < 0 && !(c instanceof  MovingPlatform))
 					if(vertices[0] < tempVertices[4])
 						tempDeltaX = (tempVertices[4]-vertices[0]);
 				if(getYVelocity() > 0)
-					if(vertices[5]>tempVertices[1])
+					if(vertices[5] > tempVertices[1])
 						tempDeltaY = (tempVertices[1]-vertices[5]);
 				if(getYVelocity() < 0)
-					if(vertices[1]<tempVertices[5])
+					if(vertices[1] < tempVertices[5])
 					{
 						if(c instanceof MovingPlatform)
 						{
@@ -148,13 +148,13 @@ public class Player extends CollidableObject
 			if(checkForContact(c))
 			{
 				float[] tempVertices = c.getVertices();
-				if(Math.abs(vertices[1] - tempVertices[5])<0.001)
+				if(Math.abs(vertices[1] - tempVertices[5]) < 0.001)
 					isOnGround = true;
-				else if(Math.abs(vertices[5] - tempVertices[1])<0.001)
+				else if(Math.abs(vertices[5] - tempVertices[1]) < 0.001)
 					isOnCelieng = true;
-				else if(Math.abs(vertices[4] - tempVertices[0])<0.001)
+				else if(Math.abs(vertices[4] - tempVertices[0]) < 0.001)
 					isOnWallRight = true;
-				else if(Math.abs(vertices[0] - tempVertices[4])<0.001)
+				else if(Math.abs(vertices[0] - tempVertices[4]) < 0.001)
 					isOnWallLeft = true;
 			}
 		setYVelocity(getYVelocity()-(0.9f * getDeltaT()));
