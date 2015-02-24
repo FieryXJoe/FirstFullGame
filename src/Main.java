@@ -326,6 +326,43 @@ public class Main
 		bindVertices(vertices, colors, indices, vaoID, vboID, vbocID, vboiID);
 		drawVertices(GL_TRIANGLES, vaoID, vboiID, indicesCount);
 	}
+	public void renderPentagonAsTriangles(float[] vertices, float[] colors, int vaoID, int vboID, int vbocID, int vboiID)
+	{
+		byte[] indices = {
+			0, 1, 2,
+			0, 2, 4,
+			2, 3, 4
+		};
+        int indicesCount = indices.length;
+		bindVertices(vertices, colors, indices, vaoID, vboID, vbocID, vboiID);
+		drawVertices(GL_TRIANGLES, vaoID, vboiID, indicesCount);
+	}
+	public void renderHexagonAsTriangles(float[] vertices, float[] colors, int vaoID, int vboID, int vbocID, int vboiID)
+	{
+		byte[] indices = {
+			0, 1, 2,
+			2, 3, 5,
+			0, 3, 5,
+			3, 4, 5
+		};
+        int indicesCount = indices.length;
+		bindVertices(vertices, colors, indices, vaoID, vboID, vbocID, vboiID);
+		drawVertices(GL_TRIANGLES, vaoID, vboiID, indicesCount);
+	}
+	public void renderOctagonAsTriangles(float[] vertices, float[] colors, int vaoID, int vboID, int vbocID, int vboiID)
+	{
+		byte[] indices = {
+			0, 6, 1,
+			5, 1, 6,
+			0, 6, 7,
+			1, 2, 5,
+			4, 2, 5,
+			2, 3, 4
+		};
+        int indicesCount = indices.length;
+		bindVertices(vertices, colors, indices, vaoID, vboID, vbocID, vboiID);
+		drawVertices(GL_TRIANGLES, vaoID, vboiID, indicesCount);
+	}
 	public void renderTriangle(float[] vertices, float[] colors, int vaoID, int vboID, int vbocID, int vboiID)
 	{
 		byte[] indices = {0,1,2};
