@@ -13,7 +13,7 @@ public class LevelExit extends CollidableObject
 			getCoords()[0] + 0.03125f * 2, getCoords()[1] + 0.05653f * 2,
 			getCoords()[0] + 0.06097f * 2, getCoords()[1] + 0.03494f * 2,
 			getCoords()[0] + 0.04962f * 2, getCoords()[1]
-					};
+	};
 	float[] colors = {
 			.4f, .1f, .1f, 1f,
 			.4f, .2f, .2f, 1f,
