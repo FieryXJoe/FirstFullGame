@@ -39,7 +39,7 @@ public class Player extends CollidableObject
 	@Override
 	public void doRender(Main m)
 	{
-		m.renderRectangleAsTriangles(vertices, getColor(), getVAO(), getVBO(), getVBOC(), getVBOI());
+		m.renderAsTriangles(vertices, getColor(), getVAO(), getVBO(), getVBOC(), getVBOI(), 4);
 	}
 	@Override
 	public void reset()

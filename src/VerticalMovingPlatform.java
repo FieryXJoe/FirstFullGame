@@ -42,7 +42,7 @@ public class VerticalMovingPlatform extends Player
 	@Override
 	public void doRender(Main m)
 	{
-		m.renderRectangleAsTriangles(getVertices(), getColor(), getVAO(), getVBO(), getVBOC(), getVBOI());
+		m.renderAsTriangles(getVertices(), getColor(), getVAO(), getVBO(), getVBOC(), getVBOI(), 4);
 	}
 	@Override
 	public void act(Main m)	

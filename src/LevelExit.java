@@ -31,7 +31,7 @@ public class LevelExit extends CollidableObject
 	public void doRender(Main m)
 	{
 		//m.renderRectangleAsTriangles(vertices, getColor(), getVAO(), getVBO(), getVBOC(), getVBOI());
-		m.renderPentagonAsTriangles(vertices, getColor(), getVAO(), getVBO(), getVBOC(), getVBOI());
+		m.renderAsTriangles(vertices, getColor(), getVAO(), getVBO(), getVBOC(), getVBOI(), 5);
 	}
 	@Override
 	public void reset()

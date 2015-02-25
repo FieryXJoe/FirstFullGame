@@ -52,7 +52,7 @@ public class Spikes extends CollidableObject
 					vertices[i * 6 + 2], vertices[i * 6 + 3],
 					vertices[i * 6 + 4], vertices[i * 6 + 5],
 			};
-			m.renderTriangle(tempVertices, getColor(), getVAO(), getVBO(), getVBOC(), getVBOI());
+			m.renderAsTriangles(tempVertices, getColor(), getVAO(), getVBO(), getVBOC(), getVBOI(), 3);
 		}
 	}
 	@Override

@@ -76,7 +76,7 @@ public class Main
 
         shaderProgram = new ShaderProgram();
         shaderProgram.attachVertexShader("VertexShader.vs");
-        shaderProgram.attachFragmentShader("FragmentShader.fs");
+        shaderProgram.attachFragmentShader("FragmentShaderColor.fs");
         shaderProgram.link();
         
         LevelLoader.loadLevel(this);
@@ -302,6 +302,35 @@ public class Main
         
         glBindVertexArray(0);
 	}
+	public void bindVertices(float[] vertices, byte[] texture, byte[] indices, int vaoID, int vboID, int vbocID, int vboiID)
+	{
+		glBindVertexArray(vaoID);
+		
+        ByteBuffer indicesBuffer = BufferUtils.createByteBuffer(indices.length);
+        indicesBuffer.put(indices).flip();
+        
+		FloatBuffer verticesBuffer = BufferUtils.createFloatBuffer(vertices.length);
+        verticesBuffer.put(vertices).flip();
+        
+        ByteBuffer textureBuffer = BufferUtils.createByteBuffer(texture.length);
+        textureBuffer.put(texture).flip();
+        
+        glBindBuffer(GL_ARRAY_BUFFER, vboID);
+        glBufferData(GL_ARRAY_BUFFER, verticesBuffer, GL_STATIC_DRAW);
+        glVertexAttribPointer(0, 2, GL_FLOAT, false, 0, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        
+        glBindBuffer(GL_ARRAY_BUFFER, vbocID);
+        glBufferData(GL_ARRAY_BUFFER, textureBuffer, GL_STATIC_DRAW);
+        glVertexAttribPointer(1, 4, GL_BYTE, false, 0, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboiID);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL15.GL_STATIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        
+        glBindVertexArray(0);
+	}
 	public void drawVertices(int mode, int vaoID, int vboiID, int count)
 	{
         glBindVertexArray(vaoID);
@@ -316,58 +345,28 @@ public class Main
         glDisableVertexAttribArray(1);
         glBindVertexArray(0);
 	}
-	public void renderRectangleAsTriangles(float[] vertices, float[] colors, int vaoID, int vboID, int vbocID, int vboiID)
+	public void renderAsTriangles(float[] vertices, float[] colors, int vaoID, int vboID, int vbocID, int vboiID, int sides)
 	{
-        byte[] indices = {
-                0, 1, 2,
-                2, 3, 0
-        };
-        int indicesCount = indices.length;
-		bindVertices(vertices, colors, indices, vaoID, vboID, vbocID, vboiID);
-		drawVertices(GL_TRIANGLES, vaoID, vboiID, indicesCount);
-	}
-	public void renderPentagonAsTriangles(float[] vertices, float[] colors, int vaoID, int vboID, int vbocID, int vboiID)
-	{
-		byte[] indices = {
-			0, 1, 2,
-			0, 2, 4,
-			2, 3, 4
-		};
-        int indicesCount = indices.length;
-		bindVertices(vertices, colors, indices, vaoID, vboID, vbocID, vboiID);
-		drawVertices(GL_TRIANGLES, vaoID, vboiID, indicesCount);
-	}
-	public void renderHexagonAsTriangles(float[] vertices, float[] colors, int vaoID, int vboID, int vbocID, int vboiID)
-	{
-		byte[] indices = {
-			0, 1, 2,
-			2, 3, 5,
-			0, 3, 5,
-			3, 4, 5
-		};
-        int indicesCount = indices.length;
-		bindVertices(vertices, colors, indices, vaoID, vboID, vbocID, vboiID);
-		drawVertices(GL_TRIANGLES, vaoID, vboiID, indicesCount);
-	}
-	public void renderOctagonAsTriangles(float[] vertices, float[] colors, int vaoID, int vboID, int vbocID, int vboiID)
-	{
-		byte[] indices = {
-			0, 6, 1,
-			5, 1, 6,
-			0, 6, 7,
-			1, 2, 5,
-			4, 2, 5,
-			2, 3, 4
-		};
-        int indicesCount = indices.length;
-		bindVertices(vertices, colors, indices, vaoID, vboID, vbocID, vboiID);
-		drawVertices(GL_TRIANGLES, vaoID, vboiID, indicesCount);
-	}
-	public void renderTriangle(float[] vertices, float[] colors, int vaoID, int vboID, int vbocID, int vboiID)
-	{
-		byte[] indices = {0,1,2};
+		byte[] orderedVertices = new byte[sides], indices = new byte[(sides - 2) * 3];
+		for(int i = 0; i < sides; i++)
+			orderedVertices[i] = (byte)(i % 2 == 0 ? Math.floor(i/2) : sides - 1 + Math.floor(i/2));  
 		int indicesCount = indices.length;
+		for(int i = 0; i < sides - 2; i++)
+			for(int j = 0; j < 3; j++)
+				indices[i * 3 + j] = orderedVertices[i + j];
 		bindVertices(vertices, colors, indices, vaoID, vboID, vbocID, vboiID);
+		drawVertices(GL_TRIANGLES, vaoID, vboiID, indicesCount);
+	}
+	public void renderAsTriangles(float[] vertices, byte[] texture, int vaoID, int vboID, int vbocID, int vboiID, int sides)
+	{
+		byte[] orderedVertices = new byte[sides], indices = new byte[(sides - 2) * 3];
+		for(int i = 0; i < sides; i++)
+			orderedVertices[i] = (byte)(i % 2 == 0 ? Math.floor(i/2) : sides - 1 + Math.floor(i/2));  
+		int indicesCount = indices.length;
+		for(int i = 0; i < sides - 2; i++)
+			for(int j = 0; j < 3; j++)
+				indices[i * 3 + j] = orderedVertices[i + j];
+		bindVertices(vertices, texture, indices, vaoID, vboID, vbocID, vboiID);
 		drawVertices(GL_TRIANGLES, vaoID, vboiID, indicesCount);
 	}
 	public void loadNextLevel()
