@@ -76,7 +76,7 @@ public class Main
 
         shaderProgram = new ShaderProgram();
         shaderProgram.attachVertexShader("VertexShader.vs");
-        shaderProgram.attachFragmentShader("FragmentShaderColor.fs");
+        shaderProgram.attachFragmentShader("FragShaderColor.fs");
         shaderProgram.link();
         
         LevelLoader.loadLevel(this);
@@ -349,7 +349,7 @@ public class Main
 	{
 		byte[] orderedVertices = new byte[sides], indices = new byte[(sides - 2) * 3];
 		for(int i = 0; i < sides; i++)
-			orderedVertices[i] = (byte)(i % 2 == 0 ? Math.floor(i/2) : sides - 1 + Math.floor(i/2));  
+			orderedVertices[i] = (byte)(i % 2 == 0 ? Math.floor(i/2) : sides - 1 - Math.floor(i/2));  
 		int indicesCount = indices.length;
 		for(int i = 0; i < sides - 2; i++)
 			for(int j = 0; j < 3; j++)
