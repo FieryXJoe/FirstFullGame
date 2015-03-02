@@ -302,7 +302,7 @@ public class Main
         
         glBindVertexArray(0);
 	}
-	public void bindVertices(float[] vertices, byte[] texture, byte[] indices, int vaoID, int vboID, int vbocID, int vboiID)
+	public void bindVertices(float[] vertices, byte[] texture, byte[] indices, int vaoID, int vboID, int vpoID, int vboiID)
 	{
 		glBindVertexArray(vaoID);
 		
@@ -320,7 +320,7 @@ public class Main
         glVertexAttribPointer(0, 2, GL_FLOAT, false, 0, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         
-        glBindBuffer(GL_ARRAY_BUFFER, vbocID);
+        glBindBuffer(GL_ARRAY_BUFFER, vpoID);
         glBufferData(GL_ARRAY_BUFFER, textureBuffer, GL_STATIC_DRAW);
         glVertexAttribPointer(1, 4, GL_BYTE, false, 0, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
